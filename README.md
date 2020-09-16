@@ -18,9 +18,13 @@
 
 调用 api 时在路径加入`_key=你设置的PatchKey`，否则会拒绝访问
 
+1. 与控制面板(WebUI) 相关的 api 无需鉴权
+
+2. 当请求的 host 为 127.0.0.1 或 0.0.0.0 或 localhost 时(即为本地请求时)，无需鉴权
+
 ## 发送队列
 
-(仅当)调用 `funcname=SendMsg` 时加入额外参数`_queue=1` 即可使用队列发送，该接口会立即返回，你无法知道处理结果。延时固定为1s
+(仅当)调用 `funcname=SendMsg` 时加入额外参数`_queue=1` 即可使用队列发送，该接口会立即返回，你无法知道处理结果。延时固定为 1s
 
 # 演示
 
@@ -41,5 +45,3 @@ PatchServerPort = 8899
 普通发送消息 : `http://127.0.0.0:8899/v1/LuaApiCaller?qq=123456&funcname=SendMsg&timeout=10&_key=xiyaowong`
 
 使用队列延时发送消息: `http://127.0.0.0:8899/v1/LuaApiCaller?qq=123456&funcname=SendMsg&timeout=10&_key=xiyaowong&_queue=1`
-
-与控制面板(WebUI) 相关的 api 无需鉴权

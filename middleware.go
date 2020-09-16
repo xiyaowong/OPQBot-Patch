@@ -12,16 +12,16 @@ import (
 func AuthorizeMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		path := ctx.Request.URL.Path
-		// fmt.Println(path)
-		// WebUI展示相关的就跳过
-		if path != "/" && !strings.Contains(path, "WebUI") {
-			_key := ctx.Query("_key")
-			if _key != Key {
+		host := strings.Split(ctx.Request.Host, ":")[0]
+		if host == "127.0.0.1" || host == "0.0.0.0" || host == "localhost" || path == "/" || strings.Contains(path, "WebUI") {
+			ctx.Next()
+		} else {
+			if _key := ctx.Query("_key"); _key == Key {
+				ctx.Next()
+			} else {
 				ctx.JSON(http.StatusBadRequest, Response{Ret: 1, Msg: "Faker!"})
 				ctx.Abort()
-				return
 			}
 		}
-		ctx.Next()
 	}
 }
