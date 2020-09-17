@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"strconv"
 	"strings"
 
@@ -21,6 +22,7 @@ func init() {
 	cfg, err := ini.ShadowLoad("CoreConf.conf")
 	if err != nil {
 		fmt.Printf("读取配置文件(CoreConf.conf)失败, %v\n", err)
+		os.Exit(1)
 	}
 	sec, _ := cfg.GetSection(ini.DEFAULT_SECTION)
 
